@@ -1,4 +1,5 @@
 import os
+from django_filters.rest_framework import DjangoFilterBackend
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -35,8 +36,16 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     'users',
-    'vehicle'
+    'vehicle',
+    'django_filters'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -70,15 +79,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": BASE_DIR / "learningplatform",
-        "USER": 'postgres'
-
-    }
-}
 
 DATABASES = {
     "default": {
