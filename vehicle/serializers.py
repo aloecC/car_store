@@ -21,7 +21,7 @@ class CarSerializer(serializers.ModelSerializer):
         fields ='__all__'
 
     def get_last_mileage(self, obj):
-        last_mileage = obj.mileage_set.order_by('-id').first()
+        last_mileage = obj.mileage.order_by('-id').first()
         return last_mileage.mileage if last_mileage else None
 
 
