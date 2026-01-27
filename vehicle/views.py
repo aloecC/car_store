@@ -46,9 +46,6 @@ class MotoUpdateAPIView(generics.UpdateAPIView):
     permission_classes = [IsOwnerOrStaff]
 
 
-
-
-
 class MotoDestroyAPIView(generics.DestroyAPIView):
     """Удаление конкретного мотоцикла"""
     queryset = Moto.objects.all()
