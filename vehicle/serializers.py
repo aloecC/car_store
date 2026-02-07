@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from vehicle.models import Car, Moto, Mileage
+from vehicle.validators import TitleValidator
 
 
 class MileageSerializer(serializers.ModelSerializer):
@@ -13,12 +14,17 @@ class MileageSerializer(serializers.ModelSerializer):
 
 class CarSerializer(serializers.ModelSerializer):
     '''Сериализатор моделей автомобилей'''
-    last_mileage = serializers.SerializerMethodField()
-    mileage = MileageSerializer(many=True)
+    last_mileage = serializers.SerializerMethodField(read_only=True)
+    mileage = MileageSerializer(many=True, read_only=True)
+    usd_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Car
         fields ='__all__'
+
+    def get_usd_price(self, instance):
+        return convert_currencies(instance)
+
 
     def get_last_mileage(self, obj):
         last_mileage = obj.mileage.order_by('-id').first()
@@ -28,9 +34,11 @@ class CarSerializer(serializers.ModelSerializer):
 class MotoSerializer(serializers.ModelSerializer):
     '''Сериализатор мото-моделей '''
     last_mileage = serializers.SerializerMethodField()
+
     class Meta:
         model = Moto
         fields ='__all__'
+
 
     @staticmethod
     def get_last_mileage(instance):
@@ -54,6 +62,10 @@ class MotoCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Moto
         fields = '__all__'
+        validators = [
+            TitleValidator(field='title'),
+            serializers.UniqueTogetherValidator(fields=['title', 'description'], queryset=Moto.objects.all())
+        ]
 
     def create(self, validated_data):
         mileage = validated_data.pop('mileage')
