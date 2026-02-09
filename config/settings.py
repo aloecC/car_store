@@ -67,7 +67,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    '<http://127.0.0.1:8000>',  # Замените на адрес вашего фронтенд-сервера
+    'http://127.0.0.1:8000',  # Замените на адрес вашего фронтенд-сервера
 ]
 
 #CSRF_TRUSTED_ORIGINS = [
@@ -183,3 +183,7 @@ AUTH_USER_MODEL = "users.User"
 #    }
 #}
 # Redis
+
+CUR_API_URL = os.getenv('CUR_API_URL')
+
+CUR_API_KEY = os.getenv('CUR_API_KEY')
