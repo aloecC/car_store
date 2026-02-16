@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'vehicle',
     'django_filters',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'django_celery_beat'
 ]
 
 REST_FRAMEWORK = {
@@ -176,13 +177,16 @@ AUTH_USER_MODEL = "users.User"
 #LOGOUT_REDIRECT_URL = "mailing:campaign_list"
 #LOGIN_URL = "users:login"
 
-#CACHES = {
-#    "default": {
-#        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#        "LOCATION": "redis://127.0.0.1:6379/1",
-#    }
-#}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    }
+}
 # Redis
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
 
 CUR_API_URL = os.getenv('CUR_API_URL')
 

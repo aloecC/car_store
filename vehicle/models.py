@@ -23,6 +23,7 @@ class Moto(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(verbose_name='описание')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    amount = models.IntegerField(default=1000, verbose_name='цена')
 
     def __str__(self):
         return f'{self.title}'
@@ -47,3 +48,4 @@ class Mileage(models.Model):
         verbose_name = 'пробег'
         verbose_name_plural = 'пробег'
         ordering = ('-year',)
+
